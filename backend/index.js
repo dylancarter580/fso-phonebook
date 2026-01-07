@@ -13,7 +13,6 @@ morgan.token('body', (req) => {
 app.use(morgan(':method :url :status - :response-time ms :body'))
 
 app.get('/info', (request, response) => {
-  let personsLen = 0
   Person.find({}).then(persons => {
     const info = `
     <p>Phonebook has info for ${persons.length} people</p>
@@ -30,7 +29,7 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
-  Person.findById(request.params.id) 
+  Person.findById(request.params.id)
     .then(person => {
       if (!person) {
         response.status(404).end()
@@ -75,15 +74,15 @@ app.put('/api/persons/:id', (request, response, next) => {
       person.number = number
 
       return person.save()
-              .then(response.json(person))
-              .catch(error => next(error))
+        .then(response.json(person))
+        .catch(error => next(error))
     })
     .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
-  Person.findByIdAndDelete(request.params.id) 
-    .then(result => {
+  Person.findByIdAndDelete(request.params.id)
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
