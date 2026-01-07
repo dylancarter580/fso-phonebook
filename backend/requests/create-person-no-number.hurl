@@ -1,5 +1,0 @@
-POST http://localhost:3001/api/persons
-content-type: application/json
-{
-  "name": "test-name"
-}
